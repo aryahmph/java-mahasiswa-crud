@@ -7,7 +7,7 @@ import java.util.List;
 public interface MahasiswaRepository {
   void add(Mahasiswa mahasiswa);
 
-  Mahasiswa findByNIM(String nim);
+  Mahasiswa findByNim(String nim);
 
   List<Mahasiswa> findAll();
 }
