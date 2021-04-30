@@ -34,4 +34,13 @@ public class Mahasiswa {
   public void setEmail(String email) {
     this.email = email;
   }
+
+  @Override
+  public String toString() {
+    return "Mahasiswa{" +
+      "name='" + name + '\'' +
+      ", nim='" + nim + '\'' +
+      ", email='" + email + '\'' +
+      '}';
+  }
 }
