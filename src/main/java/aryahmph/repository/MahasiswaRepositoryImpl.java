@@ -27,6 +27,13 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
     }
   }
 
+  /**
+   * @param nim
+   * @return Mahasiswa or Null
+   * <p>
+   * Mengembalikan satu nim, karena nim tidak boleh duplikat.
+   * Jika tidak ditemukan, kembalikan null;
+   */
   @Override
   public Mahasiswa findByNIM(String nim) {
     try (Connection connection = ConnectionUtil.getDataSource().getConnection()) {
@@ -34,11 +41,13 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
       try (PreparedStatement statement = connection.prepareStatement(sql)) {
         statement.setString(1, nim);
         try (ResultSet resultSet = statement.executeQuery()) {
-          while (resultSet.next()) {
+          if (resultSet.next()) {
             String name = resultSet.getString("name");
+            String email = resultSet.getString("email");
+
+            return new Mahasiswa(name, nim, email);
           }
         }
-
       }
     } catch (SQLException exception) {
       throw new RuntimeException(exception);
