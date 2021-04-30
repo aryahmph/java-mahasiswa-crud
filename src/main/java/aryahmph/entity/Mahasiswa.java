@@ -5,6 +5,12 @@ public class Mahasiswa {
   private String nim;
   private String email;
 
+  public Mahasiswa(String name, String nim, String email) {
+    this.name = name;
+    this.nim = nim;
+    this.email = email;
+  }
+
   public String getName() {
     return name;
   }
