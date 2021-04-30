@@ -3,7 +3,7 @@ package aryahmph.repository;
 import aryahmph.entity.Mahasiswa;
 import org.junit.jupiter.api.Test;
 
-public class findByNimTest {
+public class FindByNimTest {
 
   @Test
   void testFindByNimTest() {

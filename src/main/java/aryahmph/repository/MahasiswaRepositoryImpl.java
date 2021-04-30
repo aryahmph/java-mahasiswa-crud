@@ -27,7 +27,6 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
   }
 
   /**
-   * @param nim
    * @return Mahasiswa or Null
    * <p>
    * Mengembalikan satu nim, karena nim tidak boleh duplikat.
