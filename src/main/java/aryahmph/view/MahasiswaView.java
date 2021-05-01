@@ -1,6 +1,7 @@
 package aryahmph.view;
 
 import aryahmph.service.MahasiswaService;
+import aryahmph.util.InputUtil;
 
 public class MahasiswaView {
   private MahasiswaService mahasiswaService;
@@ -10,13 +11,31 @@ public class MahasiswaView {
   }
 
   public void showMahasiswa() {
-    while(true) {
+    while (true) {
       System.out.println("\nDAFTAR MAHASISWA");
       mahasiswaService.showMahasiswa();
 
       System.out.println("== MENU");
       System.out.println("1. Tambah\n2. Hapus\n3. Ubah\nx. Keluar");
+      String input = InputUtil.input("Masukkan angka");
+
+      if (input.equals("1")) {
+        addMahasiswa();
+      } else if (input.equals("2")) {
+
+      } else if (input.equals("3")) {
+
+      } else if (input.equals("x")) {
+        break;
+      } else {
+        System.out.println("Pilihan tidak dimengerti");
+      }
+
     }
+  }
+
+  public void addMahasiswa() {
+
   }
 
 }
