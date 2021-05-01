@@ -35,7 +35,10 @@ public class MahasiswaView {
   }
 
   public void addMahasiswa() {
-
+    String name = InputUtil.input("Masukkan nama : ");
+    String nim = InputUtil.input("Masukkan nim : ");
+    String email = InputUtil.input("Masukkan nama : ");
+    mahasiswaService.addMahasiswa(name, nim, email);
   }
 
 }
