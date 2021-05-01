@@ -3,6 +3,8 @@ package aryahmph.service;
 import aryahmph.entity.Mahasiswa;
 import aryahmph.repository.MahasiswaRepository;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class MahasiswaServiceImpl implements MahasiswaService {
@@ -17,7 +19,6 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   public void showMahasiswa() {
     List<Mahasiswa> mahasiswaList = mahasiswaRepository.findAll();
 
-    System.out.println("\n== DAFTAR MAHASISWA");
     int size = mahasiswaList.size();
     for (int i = 0; i < size; i++) {
       System.out.print((i + 1) + ".\t");
@@ -29,7 +30,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
 
   @Override
   public void addMahasiswa(String name, String nim, String email) {
-
+    mahasiswaRepository.add(new Mahasiswa(name, nim, email));
   }
 
   @Override

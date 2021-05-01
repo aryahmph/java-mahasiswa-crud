@@ -6,11 +6,19 @@ import org.junit.jupiter.api.Test;
 
 public class MahasiswaRepositoryTest {
 
-  @Test
-  void testShowTodoList() {
-    MahasiswaRepository mahasiswaRepository = new MahasiswaRepositoryImpl();
-    MahasiswaService mahasiswaService = new MahasiswaServiceImpl(mahasiswaRepository);
+  MahasiswaRepository mahasiswaRepository = new MahasiswaRepositoryImpl();
+  MahasiswaService mahasiswaService = new MahasiswaServiceImpl(mahasiswaRepository);
 
+  @Test
+  void testShowMahasiswa() {
     mahasiswaService.showMahasiswa();
+  }
+
+  @Test
+  void testAddMahasiswa() {
+    mahasiswaService.showMahasiswa();
+    mahasiswaService.addMahasiswa("Gandi", "090909", "gandi@test.com");
+    mahasiswaService.showMahasiswa();
+
   }
 }
