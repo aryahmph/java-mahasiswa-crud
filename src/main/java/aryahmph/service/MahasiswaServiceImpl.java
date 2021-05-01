@@ -3,8 +3,6 @@ package aryahmph.service;
 import aryahmph.entity.Mahasiswa;
 import aryahmph.repository.MahasiswaRepository;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class MahasiswaServiceImpl implements MahasiswaService {
@@ -41,5 +39,10 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   @Override
   public void deleteMahasiswa(Integer number) {
 
+  }
+
+  @Override
+  public boolean isNimExist(String nim) {
+    return mahasiswaRepository.isNimExist(nim);
   }
 }

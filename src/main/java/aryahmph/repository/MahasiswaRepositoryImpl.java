@@ -59,18 +59,36 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
   public List<Mahasiswa> findAll() {
     List<Mahasiswa> list = new ArrayList<>();
 
-    try (Connection connection = ConnectionUtil.getDataSource().getConnection()) {
+    try (Connection connection = ConnectionUtil.getDataSource().getConnection();
+         Statement statement = connection.createStatement()) {
       String sql = "SELECT * FROM mahasiswa";
-      try (Statement statement = connection.createStatement()) {
-        try (ResultSet resultSet = statement.executeQuery(sql)) {
-          while (resultSet.next()) {
-            list.add(new Mahasiswa(
-              resultSet.getString("name"),
-              resultSet.getString("nim"),
-              resultSet.getString("email")
-            ));
+      try (ResultSet resultSet = statement.executeQuery(sql)) {
+        while (resultSet.next()) {
+          list.add(new Mahasiswa(
+            resultSet.getString("name"),
+            resultSet.getString("nim"),
+            resultSet.getString("email")
+          ));
+        }
+        return list;
+      }
+    } catch (SQLException exception) {
+      throw new RuntimeException(exception);
+    }
+  }
+
+  @Override
+  public boolean isNimExist(String nim) {
+    try (Connection connection = ConnectionUtil.getDataSource().getConnection()) {
+      String sql = "SELECT id FROM mahasiswa WHERE nim=?";
+      try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, nim);
+        try (ResultSet resultSet = statement.executeQuery()) {
+          if (resultSet.next()) {
+            return true;
+          } else {
+            return false;
           }
-          return list;
         }
       }
     } catch (SQLException exception) {

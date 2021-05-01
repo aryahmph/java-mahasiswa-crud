@@ -11,4 +11,6 @@ public interface MahasiswaRepository {
   Mahasiswa findByNim(String nim);
 
   List<Mahasiswa> findAll();
+
+  boolean isNimExist(String nim);
 }
