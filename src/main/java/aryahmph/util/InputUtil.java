@@ -7,6 +7,6 @@ public class InputUtil {
 
   public static String input(String text) {
     System.out.print("\n" + text + " : ");
-    return scanner.nextLine();
+    return scanner.nextLine().trim();
   }
 }

@@ -10,4 +10,6 @@ public interface MahasiswaService {
   void deleteMahasiswa(Integer number);
 
   boolean isNimExist(String nim);
+
+  boolean isEmailExist(String email);
 }

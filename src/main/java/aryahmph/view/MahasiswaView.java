@@ -30,15 +30,43 @@ public class MahasiswaView {
       } else {
         System.out.println("Pilihan tidak dimengerti");
       }
-
     }
+
+    System.out.println("Terima kasih~");
   }
 
   public void addMahasiswa() {
-    String name = InputUtil.input("Masukkan nama : ");
-    String nim = InputUtil.input("Masukkan nim : ");
-    String email = InputUtil.input("Masukkan nama : ");
-    mahasiswaService.addMahasiswa(name, nim, email);
+    String name = InputUtil.input("Masukkan nama");
+    String nim, email = "";
+
+    while (true) {
+      nim = InputUtil.input("Masukkan nim");
+      if (nim.equals("x")) {
+        break;
+      } else if (!mahasiswaService.isNimExist(nim)) {
+        break;
+      } else {
+        System.out.println("[ERROR] NIM sudah terdaftar!");
+        System.out.println("Silahkan masukkan kembali NIM anda. (x. Keluar)");
+      }
+    }
+
+    while (!nim.equals("x")) {
+      email = InputUtil.input("Masukkan email");
+      if (email.equals("x")) {
+        break;
+      } else if (!mahasiswaService.isEmailExist(email)) {
+        break;
+      } else {
+        System.out.println("[ERROR] Email sudah terdaftar!");
+        System.out.println("Silahkan masukkan kembali Email anda. (x. Keluar)");
+      }
+    }
+
+    if (!nim.equals("x") && !email.equals("x")) {
+      mahasiswaService.addMahasiswa(name, nim, email);
+      System.out.println("[SUCCESS] Berhasil menambahkan data!");
+    }
   }
 
 }

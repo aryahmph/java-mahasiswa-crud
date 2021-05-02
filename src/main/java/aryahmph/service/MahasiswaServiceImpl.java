@@ -45,4 +45,9 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   public boolean isNimExist(String nim) {
     return mahasiswaRepository.isNimExist(nim);
   }
+
+  @Override
+  public boolean isEmailExist(String email) {
+    return mahasiswaRepository.isEmailExist(email);
+  }
 }

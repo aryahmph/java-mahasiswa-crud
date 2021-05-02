@@ -13,4 +13,6 @@ public interface MahasiswaRepository {
   List<Mahasiswa> findAll();
 
   boolean isNimExist(String nim);
+
+  boolean isEmailExist(String email);
 }
