@@ -15,4 +15,6 @@ public interface MahasiswaRepository {
   boolean isNimExist(String nim);
 
   boolean isEmailExist(String email);
+
+  boolean remove(String nim);
 }

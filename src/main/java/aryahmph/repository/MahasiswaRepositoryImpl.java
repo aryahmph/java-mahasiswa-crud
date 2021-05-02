@@ -115,4 +115,17 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
     }
   }
 
+  @Override
+  public boolean remove(String nim) {
+    try (Connection connection = ConnectionUtil.getDataSource().getConnection();
+         Statement statement = connection.createStatement()) {
+      String sql = "DELETE FROM mahasiswa WHERE nim ='" + nim + "'";
+      int deleted = statement.executeUpdate(sql);
+      if (deleted == 1) return true;
+      else return false;
+    } catch (SQLException exception) {
+      throw new RuntimeException(exception);
+    }
+  }
+
 }

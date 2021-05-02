@@ -11,32 +11,38 @@ public class MahasiswaView {
   }
 
   public void showMahasiswa() {
+    label:
     while (true) {
       System.out.println("\nDAFTAR MAHASISWA");
       mahasiswaService.showMahasiswa();
 
       System.out.println("== MENU");
       System.out.println("1. Tambah\n2. Hapus\n3. Ubah\nx. Keluar");
-      String input = InputUtil.input("Masukkan angka");
+      String input = InputUtil.input("\nMasukkan angka");
 
-      if (input.equals("1")) {
-        addMahasiswa();
-      } else if (input.equals("2")) {
-
-      } else if (input.equals("3")) {
-
-      } else if (input.equals("x")) {
-        break;
-      } else {
-        System.out.println("Pilihan tidak dimengerti");
+      switch (input) {
+        case "1":
+          addMahasiswa();
+          break;
+        case "2":
+          // Hapus
+          break;
+        case "3":
+          // Ubah
+          break;
+        case "x":
+          break label;
+        default:
+          System.out.println("Pilihan tidak dimengerti");
+          break;
       }
     }
 
-    System.out.println("Terima kasih~");
+    System.out.println("\nTerima kasih ~");
   }
 
   public void addMahasiswa() {
-    String name = InputUtil.input("Masukkan nama");
+    String name = InputUtil.input("\nMasukkan nama");
     String nim, email = "";
 
     while (true) {
@@ -47,7 +53,7 @@ public class MahasiswaView {
         break;
       } else {
         System.out.println("[ERROR] NIM sudah terdaftar!");
-        System.out.println("Silahkan masukkan kembali NIM anda. (x. Keluar)");
+        System.out.println("Silahkan masukkan kembali NIM anda. (x. Keluar)\n");
       }
     }
 
@@ -59,13 +65,13 @@ public class MahasiswaView {
         break;
       } else {
         System.out.println("[ERROR] Email sudah terdaftar!");
-        System.out.println("Silahkan masukkan kembali Email anda. (x. Keluar)");
+        System.out.println("Silahkan masukkan kembali Email anda. (x. Keluar)\n");
       }
     }
 
     if (!nim.equals("x") && !email.equals("x")) {
       mahasiswaService.addMahasiswa(name, nim, email);
-      System.out.println("[SUCCESS] Berhasil menambahkan data!");
+      System.out.println("\n[SUCCESS] Berhasil menambahkan data!");
     }
   }
 
