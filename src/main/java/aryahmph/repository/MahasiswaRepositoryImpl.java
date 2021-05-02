@@ -79,16 +79,13 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
 
   @Override
   public boolean isNimExist(String nim) {
+    if (nim.length() > 14) return false;
     try (Connection connection = ConnectionUtil.getDataSource().getConnection()) {
       String sql = "SELECT id FROM mahasiswa WHERE nim=?";
       try (PreparedStatement statement = connection.prepareStatement(sql)) {
         statement.setString(1, nim);
         try (ResultSet resultSet = statement.executeQuery()) {
-          if (resultSet.next()) {
-            return true;
-          } else {
-            return false;
-          }
+          return resultSet.next();
         }
       }
     } catch (SQLException exception) {
@@ -103,11 +100,7 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
       try (PreparedStatement statement = connection.prepareStatement(sql)) {
         statement.setString(1, email);
         try (ResultSet resultSet = statement.executeQuery()) {
-          if (resultSet.next()) {
-            return true;
-          } else {
-            return false;
-          }
+          return resultSet.next();
         }
       }
     } catch (SQLException exception) {
@@ -117,15 +110,20 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
 
   @Override
   public boolean remove(String nim) {
-    try (Connection connection = ConnectionUtil.getDataSource().getConnection();
-         Statement statement = connection.createStatement()) {
-      String sql = "DELETE FROM mahasiswa WHERE nim ='" + nim + "'";
-      int deleted = statement.executeUpdate(sql);
-      if (deleted == 1) return true;
-      else return false;
-    } catch (SQLException exception) {
-      throw new RuntimeException(exception);
+    if (isNimExist(nim)) {
+      String sql = "DELETE FROM mahasiswa WHERE nim = ?";
+      try (Connection connection = ConnectionUtil.getDataSource().getConnection();
+           PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, nim);
+        statement.executeUpdate();
+        return true;
+      } catch (SQLException exception) {
+        throw new RuntimeException(exception);
+      }
+    } else {
+      return false;
     }
+
   }
 
 }

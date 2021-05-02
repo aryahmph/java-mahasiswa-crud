@@ -49,12 +49,18 @@ public class MahasiswaView {
       nim = InputUtil.input("Masukkan nim");
       if (nim.equals("x")) {
         break;
-      } else if (!mahasiswaService.isNimExist(nim)) {
+      } else if (nim.length() < 14 && !mahasiswaService.isNimExist(nim)) {
         break;
+      }
+
+      if (nim.length() > 14) {
+        System.out.println("[ERROR] NIM terlalu panjang!");
       } else {
         System.out.println("[ERROR] NIM sudah terdaftar!");
-        System.out.println("Silahkan masukkan kembali NIM anda. (x. Keluar)\n");
       }
+
+      System.out.println("Silahkan masukkan kembali NIM anda. (x. Keluar)\n");
+
     }
 
     while (!nim.equals("x")) {

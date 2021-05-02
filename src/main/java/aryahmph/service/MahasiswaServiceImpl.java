@@ -15,14 +15,13 @@ public class MahasiswaServiceImpl implements MahasiswaService {
 
   @Override
   public void showMahasiswa() {
-    List<Mahasiswa> mahasiswaList = mahasiswaRepository.findAll();
-
-    int size = mahasiswaList.size();
+    List<Mahasiswa> model = mahasiswaRepository.findAll();
+    int size = model.size();
     for (int i = 0; i < size; i++) {
       System.out.print((i + 1) + ".\t");
-      System.out.println("Nama : " + mahasiswaList.get(i).getName());
-      System.out.println(" \tNIM : " + mahasiswaList.get(i).getNim());
-      System.out.println(" \tEmail : " + mahasiswaList.get(i).getEmail() + "\n");
+      System.out.println("Nama : " + model.get(i).getName());
+      System.out.println(" \tNIM : " + model.get(i).getNim());
+      System.out.println(" \tEmail : " + model.get(i).getEmail() + "\n");
     }
   }
 
@@ -38,7 +37,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
 
   @Override
   public void deleteMahasiswa(Integer number) {
-
+//    String nim = model.get(number - 1).getNim(number - 1);
   }
 
   @Override
