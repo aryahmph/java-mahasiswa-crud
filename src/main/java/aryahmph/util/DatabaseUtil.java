@@ -3,7 +3,7 @@ package aryahmph.util;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-public class ConnectionUtil {
+public class DatabaseUtil {
   private static HikariDataSource dataSource;
 
   static {
@@ -16,7 +16,7 @@ public class ConnectionUtil {
     config.setMaximumPoolSize(5);
     config.setMinimumIdle(3);
     config.setIdleTimeout(60_000);
-    config.setMaxLifetime(10 * 60_000);
+    config.setMaxLifetime(60 * 60 * 60_000);
 
     dataSource = new HikariDataSource(config);
   }

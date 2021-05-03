@@ -1,26 +1,32 @@
 package aryahmph.repository;
 
 import aryahmph.entity.Mahasiswa;
-import aryahmph.util.ConnectionUtil;
+import aryahmph.util.DatabaseUtil;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MahasiswaRepositoryImpl implements MahasiswaRepository {
 
+  private DataSource dataSource;
+
+  public MahasiswaRepositoryImpl(DataSource dataSource) {
+    this.dataSource = dataSource;
+  }
+
   @Override
   public void add(Mahasiswa mahasiswa) {
-    try (Connection connection = ConnectionUtil.getDataSource().getConnection()) {
-      String sql = "INSERT INTO mahasiswa(name,nim,email) VALUES(?,?,?)";
+    String sql = "INSERT INTO mahasiswa(name,nim,email) VALUES(?,?,?)";
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
 
-      try (PreparedStatement statement = connection.prepareStatement(sql)) {
-        statement.setString(1, mahasiswa.getName());
-        statement.setString(2, mahasiswa.getNim());
-        statement.setString(3, mahasiswa.getEmail());
+      statement.setString(1, mahasiswa.getName());
+      statement.setString(2, mahasiswa.getNim());
+      statement.setString(3, mahasiswa.getEmail());
 
-        statement.executeUpdate();
-      }
+      statement.executeUpdate();
     } catch (SQLException exception) {
       throw new RuntimeException(exception);
     }
@@ -34,20 +40,20 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
    */
   @Override
   public Mahasiswa findByNim(String nim) {
-    try (Connection connection = ConnectionUtil.getDataSource().getConnection()) {
-      String sql = "SELECT * FROM mahasiswa WHERE nim=?";
-      try (PreparedStatement statement = connection.prepareStatement(sql)) {
-        statement.setString(1, nim);
-        try (ResultSet resultSet = statement.executeQuery()) {
-          if (resultSet.next()) {
-            return new Mahasiswa(
-              resultSet.getString("name"),
-              resultSet.getString("nim"),
-              resultSet.getString("email")
-            );
-          } else {
-            return null;
-          }
+    String sql = "SELECT * FROM mahasiswa WHERE nim=?";
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+      statement.setString(1, nim);
+      try (ResultSet resultSet = statement.executeQuery()) {
+        if (resultSet.next()) {
+          return new Mahasiswa(
+            resultSet.getString("name"),
+            resultSet.getString("nim"),
+            resultSet.getString("email")
+          );
+        } else {
+          return null;
         }
       }
     } catch (SQLException exception) {
@@ -58,20 +64,20 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
   @Override
   public List<Mahasiswa> findAll() {
     List<Mahasiswa> list = new ArrayList<>();
+    String sql = "SELECT * FROM mahasiswa";
+    try (Connection connection = dataSource.getConnection();
+         Statement statement = connection.createStatement();
+         ResultSet resultSet = statement.executeQuery(sql)) {
 
-    try (Connection connection = ConnectionUtil.getDataSource().getConnection();
-         Statement statement = connection.createStatement()) {
-      String sql = "SELECT * FROM mahasiswa";
-      try (ResultSet resultSet = statement.executeQuery(sql)) {
-        while (resultSet.next()) {
-          list.add(new Mahasiswa(
-            resultSet.getString("name"),
-            resultSet.getString("nim"),
-            resultSet.getString("email")
-          ));
-        }
-        return list;
+      while (resultSet.next()) {
+        list.add(new Mahasiswa(
+          resultSet.getString("name"),
+          resultSet.getString("nim"),
+          resultSet.getString("email")
+        ));
       }
+      return list;
+
     } catch (SQLException exception) {
       throw new RuntimeException(exception);
     }
@@ -80,13 +86,13 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
   @Override
   public boolean isNimExist(String nim) {
     if (nim.length() > 14) return false;
-    try (Connection connection = ConnectionUtil.getDataSource().getConnection()) {
-      String sql = "SELECT id FROM mahasiswa WHERE nim=?";
-      try (PreparedStatement statement = connection.prepareStatement(sql)) {
-        statement.setString(1, nim);
-        try (ResultSet resultSet = statement.executeQuery()) {
-          return resultSet.next();
-        }
+    String sql = "SELECT id FROM mahasiswa WHERE nim=?";
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, nim);
+
+      try (ResultSet resultSet = statement.executeQuery()) {
+        return resultSet.next();
       }
     } catch (SQLException exception) {
       throw new RuntimeException(exception);
@@ -95,13 +101,13 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
 
   @Override
   public boolean isEmailExist(String email) {
-    try (Connection connection = ConnectionUtil.getDataSource().getConnection()) {
-      String sql = "SELECT id FROM mahasiswa WHERE email=?";
-      try (PreparedStatement statement = connection.prepareStatement(sql)) {
-        statement.setString(1, email);
-        try (ResultSet resultSet = statement.executeQuery()) {
-          return resultSet.next();
-        }
+    String sql = "SELECT id FROM mahasiswa WHERE email=?";
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+      statement.setString(1, email);
+      try (ResultSet resultSet = statement.executeQuery()) {
+        return resultSet.next();
       }
     } catch (SQLException exception) {
       throw new RuntimeException(exception);
@@ -112,7 +118,7 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
   public boolean remove(String nim) {
     if (isNimExist(nim)) {
       String sql = "DELETE FROM mahasiswa WHERE nim = ?";
-      try (Connection connection = ConnectionUtil.getDataSource().getConnection();
+      try (Connection connection = dataSource.getConnection();
            PreparedStatement statement = connection.prepareStatement(sql)) {
         statement.setString(1, nim);
         statement.executeUpdate();
