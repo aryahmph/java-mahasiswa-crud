@@ -76,7 +76,7 @@ public class MahasiswaView {
     }
 
     if (!nim.equals("x") && !email.equals("x")) {
-      mahasiswaService.addMahasiswa(0,name, nim, email);
+      mahasiswaService.addMahasiswa(name, nim, email);
       System.out.println("\n[SUCCESS] Berhasil menambahkan data!");
     }
   }

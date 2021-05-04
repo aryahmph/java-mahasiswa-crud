@@ -26,8 +26,17 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   }
 
   @Override
-  public void addMahasiswa(int id, String name, String nim, String email) {
-    mahasiswaRepository.add(new Mahasiswa(id, name, nim, email));
+  public void addMahasiswa(String name, String nim, String email) {
+    if (nim.length() > 14) {
+      System.out.println("[Gagal menambahkan mahasiswa, nim terlalu panjang]");
+    } else if (name.length() > 255) {
+      System.out.println("[Gagal menambahkan mahasiswa, nama terlalu panjang]");
+    } else if (email.length() > 255) {
+      System.out.println("[Gagal menambahkan mahasiswa, email terlalu panjang]");
+    } else {
+      mahasiswaRepository.add(new Mahasiswa(name, nim, email));
+      System.out.println("[Sukses menambahkan mahasiswa : " + name + " ]");
+    }
   }
 
   @Override
@@ -36,8 +45,8 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   }
 
   @Override
-  public void removeMahasiswa(Integer number) {
-//    String nim = model.get(number - 1).getNim(number - 1);
+  public void removeMahasiswa(int number) {
+
   }
 
   @Override

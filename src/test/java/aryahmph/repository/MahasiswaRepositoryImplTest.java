@@ -21,20 +21,20 @@ public class MahasiswaRepositoryImplTest {
 
   @Test
   void testAdd() {
-    Mahasiswa mahasiswa = new Mahasiswa("Arya Yunanta", "09021182025009", "arya@test.com");
+    Mahasiswa mahasiswa = new Mahasiswa("Gandi Subara", "09020082025009", "gandi@test.com");
     mahasiswaRepository.add(mahasiswa);
   }
 
   @Test
   void testRemove() {
-    boolean delete = mahasiswaRepository.remove(1);
+    boolean delete = mahasiswaRepository.remove(5);
     Assertions.assertEquals(true, delete);
   }
 
   @Test
   void testAddAndRemove() {
-    mahasiswaRepository.remove(1);
-    Mahasiswa mahasiswa = new Mahasiswa(1, "Arya Yunanta", "09021182025009", "arya@test.com");
+    mahasiswaRepository.remove(2);
+    Mahasiswa mahasiswa = new Mahasiswa("Arya Yunanta", "09021182025009", "arya@test.com");
     mahasiswaRepository.add(mahasiswa);
   }
 
