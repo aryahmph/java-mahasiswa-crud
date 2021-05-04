@@ -7,6 +7,10 @@ import java.util.List;
 public interface MahasiswaRepository {
   void add(Mahasiswa mahasiswa);
 
+  boolean remove(int id);
+
+  boolean isExist(int id);
+
   Mahasiswa findByNim(String nim);
 
   List<Mahasiswa> findAll();
@@ -15,5 +19,4 @@ public interface MahasiswaRepository {
 
   boolean isEmailExist(String email);
 
-  boolean remove(String nim);
 }

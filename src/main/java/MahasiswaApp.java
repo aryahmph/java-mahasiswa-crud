@@ -1,17 +1,16 @@
-package aryahmph.view;
-
 import aryahmph.repository.MahasiswaRepository;
 import aryahmph.repository.MahasiswaRepositoryImpl;
 import aryahmph.service.MahasiswaService;
 import aryahmph.service.MahasiswaServiceImpl;
-import org.junit.jupiter.api.Test;
+import aryahmph.util.DatabaseUtil;
+import aryahmph.view.MahasiswaView;
 
-public class MahasiswaViewTest {
+import javax.sql.DataSource;
 
-
-  @Test
-  void testShowMahasiswa() {
-    MahasiswaRepository mahasiswaRepository = new MahasiswaRepositoryImpl();
+public class MahasiswaApp {
+  public static void main(String[] args) {
+    DataSource dataSource = DatabaseUtil.getDataSource();
+    MahasiswaRepository mahasiswaRepository = new MahasiswaRepositoryImpl(dataSource);
     MahasiswaService mahasiswaService = new MahasiswaServiceImpl(mahasiswaRepository);
     MahasiswaView mahasiswaView = new MahasiswaView(mahasiswaService);
     mahasiswaView.showMahasiswa();

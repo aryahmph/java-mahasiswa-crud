@@ -26,8 +26,8 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   }
 
   @Override
-  public void addMahasiswa(String name, String nim, String email) {
-    mahasiswaRepository.add(new Mahasiswa(name, nim, email));
+  public void addMahasiswa(int id, String name, String nim, String email) {
+    mahasiswaRepository.add(new Mahasiswa(id, name, nim, email));
   }
 
   @Override

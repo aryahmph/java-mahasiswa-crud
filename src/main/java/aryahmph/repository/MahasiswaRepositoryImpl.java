@@ -1,7 +1,6 @@
 package aryahmph.repository;
 
 import aryahmph.entity.Mahasiswa;
-import aryahmph.util.DatabaseUtil;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -18,13 +17,14 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
 
   @Override
   public void add(Mahasiswa mahasiswa) {
-    String sql = "INSERT INTO mahasiswa(name,nim,email) VALUES(?,?,?)";
+    String sql = "INSERT INTO mahasiswa(id,name,nim,email) VALUES(?,?,?,?)";
     try (Connection connection = dataSource.getConnection();
          PreparedStatement statement = connection.prepareStatement(sql)) {
 
-      statement.setString(1, mahasiswa.getName());
-      statement.setString(2, mahasiswa.getNim());
-      statement.setString(3, mahasiswa.getEmail());
+      statement.setInt(1, mahasiswa.getId());
+      statement.setString(2, mahasiswa.getName());
+      statement.setString(3, mahasiswa.getNim());
+      statement.setString(4, mahasiswa.getEmail());
 
       statement.executeUpdate();
     } catch (SQLException exception) {
@@ -32,12 +32,38 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
     }
   }
 
-  /**
-   * @return Mahasiswa or Null
-   * <p>
-   * Mengembalikan satu nim, karena nim tidak boleh duplikat.
-   * Jika tidak ditemukan, kembalikan null;
-   */
+  @Override
+  public boolean remove(int id) {
+    if (isExist(id)) {
+      String sql = "DELETE FROM mahasiswa WHERE id = ?";
+      try (Connection connection = dataSource.getConnection();
+           PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setInt(1, id);
+        int delete = statement.executeUpdate();
+        return delete == 1;
+
+      } catch (SQLException exception) {
+        throw new RuntimeException(exception);
+      }
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public boolean isExist(int id) {
+    String sql = "SELECT id FROM mahasiswa WHERE id=?";
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setInt(1, id);
+      try (ResultSet resultSet = statement.executeQuery()) {
+        return resultSet.next();
+      }
+    } catch (SQLException exception) {
+      throw new RuntimeException(exception);
+    }
+  }
+
   @Override
   public Mahasiswa findByNim(String nim) {
     String sql = "SELECT * FROM mahasiswa WHERE nim=?";
@@ -48,6 +74,7 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
       try (ResultSet resultSet = statement.executeQuery()) {
         if (resultSet.next()) {
           return new Mahasiswa(
+            resultSet.getInt("id"),
             resultSet.getString("name"),
             resultSet.getString("nim"),
             resultSet.getString("email")
@@ -71,6 +98,7 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
 
       while (resultSet.next()) {
         list.add(new Mahasiswa(
+          resultSet.getInt("id"),
           resultSet.getString("name"),
           resultSet.getString("nim"),
           resultSet.getString("email")
@@ -114,22 +142,5 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
     }
   }
 
-  @Override
-  public boolean remove(String nim) {
-    if (isNimExist(nim)) {
-      String sql = "DELETE FROM mahasiswa WHERE nim = ?";
-      try (Connection connection = dataSource.getConnection();
-           PreparedStatement statement = connection.prepareStatement(sql)) {
-        statement.setString(1, nim);
-        statement.executeUpdate();
-        return true;
-      } catch (SQLException exception) {
-        throw new RuntimeException(exception);
-      }
-    } else {
-      return false;
-    }
-
-  }
 
 }

@@ -1,14 +1,24 @@
 package aryahmph.entity;
 
 public class Mahasiswa {
+  private int id;
   private String name;
   private String nim;
   private String email;
 
-  public Mahasiswa(String name, String nim, String email) {
+  public Mahasiswa(int id, String name, String nim, String email) {
+    this.id = id;
     this.name = name;
     this.nim = nim;
     this.email = email;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getName() {
