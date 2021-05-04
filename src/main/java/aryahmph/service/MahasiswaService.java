@@ -7,7 +7,7 @@ public interface MahasiswaService {
 
   void updateMahasiswa();
 
-  void deleteMahasiswa(Integer number);
+  void removeMahasiswa(Integer number);
 
   boolean isNimExist(String nim);
 

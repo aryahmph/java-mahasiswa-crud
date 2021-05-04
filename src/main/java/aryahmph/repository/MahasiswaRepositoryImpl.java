@@ -17,16 +17,20 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
 
   @Override
   public void add(Mahasiswa mahasiswa) {
-    String sql = "INSERT INTO mahasiswa(id,name,nim,email) VALUES(?,?,?,?)";
+    String sql = "INSERT INTO mahasiswa(name,nim,email) VALUES(?,?,?)";
     try (Connection connection = dataSource.getConnection();
-         PreparedStatement statement = connection.prepareStatement(sql)) {
+         PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-      statement.setInt(1, mahasiswa.getId());
-      statement.setString(2, mahasiswa.getName());
-      statement.setString(3, mahasiswa.getNim());
-      statement.setString(4, mahasiswa.getEmail());
-
+      statement.setString(1, mahasiswa.getName());
+      statement.setString(2, mahasiswa.getNim());
+      statement.setString(3, mahasiswa.getEmail());
       statement.executeUpdate();
+
+      try (ResultSet resultSet = statement.getGeneratedKeys()) {
+        if (resultSet.next())
+          mahasiswa.setId(resultSet.getInt(1));
+      }
+
     } catch (SQLException exception) {
       throw new RuntimeException(exception);
     }

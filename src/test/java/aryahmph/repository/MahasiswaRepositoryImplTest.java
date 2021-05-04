@@ -21,7 +21,7 @@ public class MahasiswaRepositoryImplTest {
 
   @Test
   void testAdd() {
-    Mahasiswa mahasiswa = new Mahasiswa(1, "Arya Yunanta", "09021182025009", "arya@test.com");
+    Mahasiswa mahasiswa = new Mahasiswa("Arya Yunanta", "09021182025009", "arya@test.com");
     mahasiswaRepository.add(mahasiswa);
   }
 

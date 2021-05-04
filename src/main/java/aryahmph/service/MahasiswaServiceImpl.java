@@ -36,7 +36,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   }
 
   @Override
-  public void deleteMahasiswa(Integer number) {
+  public void removeMahasiswa(Integer number) {
 //    String nim = model.get(number - 1).getNim(number - 1);
   }
 
