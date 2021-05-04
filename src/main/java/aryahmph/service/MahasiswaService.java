@@ -1,5 +1,7 @@
 package aryahmph.service;
 
+import aryahmph.entity.Mahasiswa;
+
 public interface MahasiswaService {
   void showMahasiswa();
 
@@ -8,6 +10,8 @@ public interface MahasiswaService {
   void updateMahasiswa();
 
   void removeMahasiswa(int number);
+
+  Mahasiswa findById(int id);
 
   boolean isNimExist(String nim);
 

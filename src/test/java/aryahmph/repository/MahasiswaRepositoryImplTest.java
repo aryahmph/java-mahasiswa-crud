@@ -48,6 +48,12 @@ public class MahasiswaRepositoryImplTest {
     }
   }
 
+  @Test
+  void testFindById() {
+    Mahasiswa mahasiswa = mahasiswaRepository.findById(2);
+    System.out.println(mahasiswa);
+  }
+
   @AfterEach
   void tearDown() {
     dataSource.close();

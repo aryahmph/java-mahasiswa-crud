@@ -56,6 +56,11 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   }
 
   @Override
+  public Mahasiswa findById(int id) {
+    return mahasiswaRepository.findById(id);
+  }
+
+  @Override
   public boolean isNimExist(String nim) {
     return mahasiswaRepository.isNimExist(nim);
   }

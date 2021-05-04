@@ -93,6 +93,29 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
   }
 
   @Override
+  public Mahasiswa findById(int id) {
+    String sql = "SELECT name,nim,email FROM mahasiswa WHERE id=?";
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+      statement.setInt(1, id);
+      try (ResultSet resultSet = statement.executeQuery()) {
+        if (resultSet.next()) {
+          return new Mahasiswa(
+            resultSet.getString("name"),
+            resultSet.getString("nim"),
+            resultSet.getString("email")
+          );
+        } else {
+          return null;
+        }
+      }
+    } catch (SQLException exception) {
+      throw new RuntimeException(exception);
+    }
+  }
+
+  @Override
   public List<Mahasiswa> findAll() {
     List<Mahasiswa> list = new ArrayList<>();
     String sql = "SELECT * FROM mahasiswa";

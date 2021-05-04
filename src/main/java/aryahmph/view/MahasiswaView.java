@@ -1,5 +1,6 @@
 package aryahmph.view;
 
+import aryahmph.entity.Mahasiswa;
 import aryahmph.service.MahasiswaService;
 import aryahmph.util.InputUtil;
 
@@ -25,7 +26,7 @@ public class MahasiswaView {
           addMahasiswa();
           break;
         case "2":
-          // Hapus
+          removeMahasiswa();
           break;
         case "3":
           // Ubah
@@ -77,6 +78,37 @@ public class MahasiswaView {
       }
 
     }
+  }
+
+  public void removeMahasiswa() {
+    try {
+      String id = InputUtil.input("Masukkan ID (x Jika Batal)");
+      if (!id.equals("x")) {
+        Mahasiswa mahasiswa = mahasiswaService.findById(Integer.parseInt(id));
+
+        if (mahasiswa == null) {
+          System.out.println("[Gagal ID salah, data tidak ditemukan]");
+          return;
+        }
+
+        System.out.println("\nNama :\t" + mahasiswa.getName());
+        System.out.println("NIM :\t" + mahasiswa.getNim());
+        System.out.println("Email :\t" + mahasiswa.getEmail());
+
+        String isSure = InputUtil.input("\nAnda yakin ingin menghapus data tersebut ? (Y/n)");
+        if (isSure.equalsIgnoreCase("y")) {
+          mahasiswaService.removeMahasiswa(Integer.parseInt(id));
+          System.out.println("[Berhasil menghapus mahasiswa : " + mahasiswa.getName() + " ]");
+        } else if (isSure.equalsIgnoreCase("n")) {
+          System.out.println("[Batal menghapus data]");
+        } else {
+          System.out.println("Pilihan tidak dimengerti");
+        }
+      }
+    } catch (NumberFormatException exception) {
+      System.out.println("Input salah!");
+    }
+
   }
 
 }
