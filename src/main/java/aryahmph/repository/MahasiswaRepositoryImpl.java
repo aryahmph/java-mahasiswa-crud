@@ -169,5 +169,48 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
     }
   }
 
+  @Override
+  public List<Mahasiswa> find(String value) {
+    List<Mahasiswa> list = new ArrayList<>();
+    String sql = """
+      SELECT * FROM mahasiswa WHERE name LIKE ?
+      OR nim = ?
+      """;
+
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+      statement.setString(1, "%" + value + "%");
+      statement.setString(2, value);
+
+      try (ResultSet resultSet = statement.executeQuery()) {
+        while (resultSet.next()) {
+          list.add(new Mahasiswa(
+            resultSet.getInt("id"),
+            resultSet.getString("name"),
+            resultSet.getString("nim"),
+            resultSet.getString("email")
+          ));
+        }
+        return list;
+
+      }
+    } catch (SQLException exception) {
+      throw new RuntimeException(exception);
+    }
+  }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

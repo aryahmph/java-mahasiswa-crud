@@ -54,6 +54,14 @@ public class MahasiswaRepositoryImplTest {
     System.out.println(mahasiswa);
   }
 
+  @Test
+  void testFind() {
+    List<Mahasiswa> mahasiswaList = mahasiswaRepository.find("arya");
+    for (Mahasiswa mahasiswa : mahasiswaList) {
+      System.out.println(mahasiswa);
+    }
+  }
+
   @AfterEach
   void tearDown() {
     dataSource.close();

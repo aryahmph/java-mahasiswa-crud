@@ -9,13 +9,15 @@ public interface MahasiswaRepository {
 
   boolean remove(int id);
 
-  boolean isExist(int id);
-
   Mahasiswa findByNim(String nim);
 
   Mahasiswa findById(int id);
 
   List<Mahasiswa> findAll();
+
+  List<Mahasiswa> find(String value);
+
+  boolean isExist(int id);
 
   boolean isNimExist(String nim);
 
