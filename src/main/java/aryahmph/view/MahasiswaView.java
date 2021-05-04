@@ -42,42 +42,40 @@ public class MahasiswaView {
   }
 
   public void addMahasiswa() {
-    String name = InputUtil.input("\nMasukkan nama");
-    String nim, email = "";
+    String name = InputUtil.input("\nMasukkan nama (x Jika Batal)");
+    if (!name.equals("x")) {
 
-    while (true) {
-      nim = InputUtil.input("Masukkan nim");
-      if (nim.equals("x")) {
-        break;
-      } else if (nim.length() < 14 && !mahasiswaService.isNimExist(nim)) {
-        break;
+      // Nim
+      while (true) {
+        String nim = InputUtil.input("Masukkan nim (x Jika Batal)");
+        if (nim.equals("x")) {
+          return;
+        } else if (nim.length() > 14) {
+          System.out.println("[Gagal NIM yang anda masukkan terlalu panjang]\n");
+        } else if (mahasiswaService.isNimExist(nim)) {
+          System.out.println("[Gagal NIM telah terdaftar]\n");
+        } else {
+
+          // Email
+          while (true) {
+            String email = InputUtil.input("Masukkan email (x Jika Batal)");
+            if (email.equals("x")) {
+              return;
+            } else if (email.length() > 255) {
+              System.out.println("[Gagal Email yang anda masukkan terlalu panjang]\n");
+            } else if (mahasiswaService.isEmailExist(email)) {
+              System.out.println("[Gagal Email telah terdaftar]\n");
+            } else {
+
+              mahasiswaService.addMahasiswa(name, nim, email);
+              return;
+
+            }
+          }
+
+        }
       }
 
-      if (nim.length() > 14) {
-        System.out.println("[ERROR] NIM terlalu panjang!");
-      } else {
-        System.out.println("[ERROR] NIM sudah terdaftar!");
-      }
-
-      System.out.println("Silahkan masukkan kembali NIM anda. (x. Keluar)\n");
-
-    }
-
-    while (!nim.equals("x")) {
-      email = InputUtil.input("Masukkan email");
-      if (email.equals("x")) {
-        break;
-      } else if (!mahasiswaService.isEmailExist(email)) {
-        break;
-      } else {
-        System.out.println("[ERROR] Email sudah terdaftar!");
-        System.out.println("Silahkan masukkan kembali Email anda. (x. Keluar)\n");
-      }
-    }
-
-    if (!nim.equals("x") && !email.equals("x")) {
-      mahasiswaService.addMahasiswa(name, nim, email);
-      System.out.println("\n[SUCCESS] Berhasil menambahkan data!");
     }
   }
 

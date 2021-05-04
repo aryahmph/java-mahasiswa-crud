@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 
 public class MahasiswaRepositoryImplTest {
   private HikariDataSource dataSource;
@@ -21,7 +23,7 @@ public class MahasiswaRepositoryImplTest {
 
   @Test
   void testAdd() {
-    Mahasiswa mahasiswa = new Mahasiswa("Gandi Subara", "09020082025009", "gandi@test.com");
+    Mahasiswa mahasiswa = new Mahasiswa("Tamir Gading", "09082025009", "gading@test.com");
     mahasiswaRepository.add(mahasiswa);
   }
 
@@ -36,6 +38,14 @@ public class MahasiswaRepositoryImplTest {
     mahasiswaRepository.remove(2);
     Mahasiswa mahasiswa = new Mahasiswa("Arya Yunanta", "09021182025009", "arya@test.com");
     mahasiswaRepository.add(mahasiswa);
+  }
+
+  @Test
+  void testFindAll() {
+    List<Mahasiswa> list = mahasiswaRepository.findAll();
+    for (Mahasiswa mahasiswa : list) {
+      System.out.println(mahasiswa);
+    }
   }
 
   @AfterEach

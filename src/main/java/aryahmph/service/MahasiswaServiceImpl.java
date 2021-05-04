@@ -19,7 +19,8 @@ public class MahasiswaServiceImpl implements MahasiswaService {
     int size = model.size();
     for (int i = 0; i < size; i++) {
       System.out.print((i + 1) + ".\t");
-      System.out.println("Nama : " + model.get(i).getName());
+      System.out.println("ID : " + model.get(i).getId());
+      System.out.println(" \tNama : " + model.get(i).getName());
       System.out.println(" \tNIM : " + model.get(i).getNim());
       System.out.println(" \tEmail : " + model.get(i).getEmail() + "\n");
     }
@@ -46,7 +47,12 @@ public class MahasiswaServiceImpl implements MahasiswaService {
 
   @Override
   public void removeMahasiswa(int number) {
-
+    boolean isSuccess = mahasiswaRepository.remove(number);
+    if (isSuccess) {
+      System.out.println("[Berhasil menghapus mahasiswa kode : " + number + " ]");
+    } else {
+      System.out.println("[Gagal menghapus mahasiswa kode : " + number + " ]");
+    }
   }
 
   @Override

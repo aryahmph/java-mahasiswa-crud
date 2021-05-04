@@ -4,6 +4,7 @@ import aryahmph.repository.MahasiswaRepositoryImpl;
 import aryahmph.util.DatabaseUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,16 @@ public class MahasiswaServiceImplTest {
   @Test
   void testAdd() {
     mahasiswaService.addMahasiswa("Gandi Subara", "090211820", "gandi@test.com");
+  }
+
+  @Test
+  void testRemove() {
+    mahasiswaService.removeMahasiswa(2);
+  }
+
+  @Test
+  void testShowMahasiswa() {
+    mahasiswaService.showMahasiswa();
   }
 
   @AfterEach
