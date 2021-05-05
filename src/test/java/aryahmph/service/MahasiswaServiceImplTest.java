@@ -34,6 +34,11 @@ public class MahasiswaServiceImplTest {
     mahasiswaService.showMahasiswa();
   }
 
+  @Test
+  void testSearchMahasiswa() {
+    mahasiswaService.searchMahasiswa("arya");
+  }
+
   @AfterEach
   void tearDown() {
     dataSource.close();

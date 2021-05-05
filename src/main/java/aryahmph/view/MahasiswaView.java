@@ -18,7 +18,7 @@ public class MahasiswaView {
       mahasiswaService.showMahasiswa();
 
       System.out.println("== MENU");
-      System.out.println("1. Tambah\n2. Hapus\n3. Ubah\nx. Keluar");
+      System.out.println("1. Tambah\n2. Hapus\n3. Cari\n4. Ubah\nx. Keluar");
       String input = InputUtil.input("\nMasukkan angka");
 
       switch (input) {
@@ -29,7 +29,7 @@ public class MahasiswaView {
           removeMahasiswa();
           break;
         case "3":
-          // Ubah
+          searchMahasiswa();
           break;
         case "x":
           break label;
@@ -107,6 +107,38 @@ public class MahasiswaView {
       }
     } catch (NumberFormatException exception) {
       System.out.println("Input salah!");
+    }
+
+  }
+
+  public void searchMahasiswa() {
+    label:
+    while (true) {
+      String key = InputUtil.input("\nMasukkan kata kunci (x Jika Batal)");
+      if (key.equals("x")) break;
+      else mahasiswaService.searchMahasiswa(key);
+
+
+      while (true) {
+        System.out.println("== MENU");
+        System.out.println("1. Hapus\n2. Ubah\nx. Keluar");
+        String input = InputUtil.input("\nMasukkan angka");
+
+        switch (input) {
+          case "1":
+            removeMahasiswa();
+            break;
+          case "2":
+            //ubah
+          case "x":
+            break label;
+          default:
+            System.out.println("Pilihan tidak dimengerti");
+            break;
+        }
+      }
+
+
     }
 
   }

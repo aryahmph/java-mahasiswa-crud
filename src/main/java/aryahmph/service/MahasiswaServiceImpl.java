@@ -16,28 +16,14 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   @Override
   public void showMahasiswa() {
     List<Mahasiswa> model = mahasiswaRepository.findAll();
-    int size = model.size();
-    for (int i = 0; i < size; i++) {
-      System.out.print((i + 1) + ".\t");
-      System.out.println("ID : " + model.get(i).getId());
-      System.out.println(" \tNama : " + model.get(i).getName());
-      System.out.println(" \tNIM : " + model.get(i).getNim());
-      System.out.println(" \tEmail : " + model.get(i).getEmail() + "\n");
-    }
+    displayPropertyMahasiswa(model);
   }
 
   @Override
   public void addMahasiswa(String name, String nim, String email) {
-    if (nim.length() > 14) {
-      System.out.println("[Gagal menambahkan mahasiswa, nim terlalu panjang]");
-    } else if (name.length() > 255) {
-      System.out.println("[Gagal menambahkan mahasiswa, nama terlalu panjang]");
-    } else if (email.length() > 255) {
-      System.out.println("[Gagal menambahkan mahasiswa, email terlalu panjang]");
-    } else {
-      mahasiswaRepository.add(new Mahasiswa(name, nim, email));
-      System.out.println("[Sukses menambahkan mahasiswa : " + name + " ]");
-    }
+    mahasiswaRepository.add(new Mahasiswa(name, nim, email));
+    System.out.println("[Sukses menambahkan mahasiswa : " + name + " ]");
+
   }
 
   @Override
@@ -58,6 +44,27 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   @Override
   public Mahasiswa findById(int id) {
     return mahasiswaRepository.findById(id);
+  }
+
+  @Override
+  public void searchMahasiswa(String value) {
+    List<Mahasiswa> model = mahasiswaRepository.find(value);
+    if (model == null) {
+      System.out.println("\nData tidak ditemukan");
+    } else {
+      displayPropertyMahasiswa(model);
+    }
+  }
+
+  private void displayPropertyMahasiswa(List<Mahasiswa> model) {
+    int size = model.size();
+    for (int i = 0; i < size; i++) {
+      System.out.print((i + 1) + ".\t");
+      System.out.println("ID : " + model.get(i).getId());
+      System.out.println(" \tNama : " + model.get(i).getName());
+      System.out.println(" \tNIM : " + model.get(i).getNim());
+      System.out.println(" \tEmail : " + model.get(i).getEmail() + "\n");
+    }
   }
 
   @Override
