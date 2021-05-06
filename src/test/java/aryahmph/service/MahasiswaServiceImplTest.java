@@ -39,6 +39,11 @@ public class MahasiswaServiceImplTest {
     mahasiswaService.searchMahasiswa("arya");
   }
 
+  @Test
+  void testUpdateMahasiswa() {
+    mahasiswaService.updateMahasiswa(1,"Arya Yunanta", "09120313091", "gandi@test.com");
+  }
+
   @AfterEach
   void tearDown() {
     dataSource.close();

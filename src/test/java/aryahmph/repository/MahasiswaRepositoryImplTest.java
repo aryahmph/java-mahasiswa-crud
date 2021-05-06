@@ -62,6 +62,12 @@ public class MahasiswaRepositoryImplTest {
     }
   }
 
+  @Test
+  void testUpdate() {
+    Mahasiswa mahasiswa = new Mahasiswa(100,"Arya Pradata", "023013010", "arya@test.com");
+    Assertions.assertFalse(mahasiswaRepository.update(mahasiswa));
+  }
+
   @AfterEach
   void tearDown() {
     dataSource.close();

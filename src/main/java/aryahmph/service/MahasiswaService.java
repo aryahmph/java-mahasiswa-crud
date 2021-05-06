@@ -9,7 +9,7 @@ public interface MahasiswaService {
 
   void addMahasiswa(String name, String nim, String email);
 
-  void updateMahasiswa();
+  void updateMahasiswa(int id, String name, String nim, String email);
 
   void removeMahasiswa(int number);
 

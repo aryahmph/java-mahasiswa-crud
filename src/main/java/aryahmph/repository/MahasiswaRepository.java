@@ -9,6 +9,8 @@ public interface MahasiswaRepository {
 
   boolean remove(int id);
 
+  boolean update(Mahasiswa mahasiswa);
+
   Mahasiswa findByNim(String nim);
 
   Mahasiswa findById(int id);

@@ -55,6 +55,35 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
   }
 
   @Override
+  public boolean update(Mahasiswa mahasiswa) {
+    if (isExist(mahasiswa.getId())) {
+      String sql = """
+        UPDATE mahasiswa
+        SET name = ?,
+            nim = ?,
+            email = ?
+        WHERE id = ?
+        """;
+      try (Connection connection = dataSource.getConnection();
+           PreparedStatement statement = connection.prepareStatement(sql)) {
+
+        statement.setString(1, mahasiswa.getName());
+        statement.setString(2, mahasiswa.getNim());
+        statement.setString(3, mahasiswa.getEmail());
+        statement.setInt(4, mahasiswa.getId());
+
+        int update = statement.executeUpdate();
+        return update > 0;
+
+      } catch (SQLException exception) {
+        throw new RuntimeException(exception);
+      }
+    } else {
+      return false;
+    }
+  }
+
+  @Override
   public boolean isExist(int id) {
     String sql = "SELECT id FROM mahasiswa WHERE id=?";
     try (Connection connection = dataSource.getConnection();
@@ -102,6 +131,7 @@ public class MahasiswaRepositoryImpl implements MahasiswaRepository {
       try (ResultSet resultSet = statement.executeQuery()) {
         if (resultSet.next()) {
           return new Mahasiswa(
+            id,
             resultSet.getString("name"),
             resultSet.getString("nim"),
             resultSet.getString("email")

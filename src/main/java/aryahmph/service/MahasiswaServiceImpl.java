@@ -27,18 +27,43 @@ public class MahasiswaServiceImpl implements MahasiswaService {
   }
 
   @Override
-  public void updateMahasiswa() {
+  public void updateMahasiswa(int id, String name, String nim, String email) {
+    if (nim.length() > 14) {
+      System.out.println("[Gagal nim terlalu panjang, maks 14]");
+    } else if (email.length() > 255) {
+      System.out.println("[Gagal email terlalu panjang, maks 255]");
+    } else if (name.length() > 255) {
+      System.out.println("[Gagal nama terlalu panjang, maks 255]");
+    }
+
+    Mahasiswa mahasiswa = mahasiswaRepository.findById(id);
+
+    if (!nim.equals(mahasiswa.getNim()) && isNimExist(nim)) {
+      System.out.println("[Gagal mengubah, nim telah terdaftar]");
+      return;
+    }
+
+    if (!email.equals(mahasiswa.getNim()) && isEmailExist(email)) {
+      System.out.println("[Gagal mengubah, nim telah terdaftar]");
+      return;
+    }
+
+    boolean isSuccess = mahasiswaRepository.update(new Mahasiswa(id, name, nim, email));
+    if (isSuccess)
+      System.out.println("[Berhasil mengubah mahasiswa kode : " + id + " ]");
+    else
+      System.out.println("[Gagal mengubah mahasiswa kode : " + id + " ]");
 
   }
 
   @Override
   public void removeMahasiswa(int number) {
     boolean isSuccess = mahasiswaRepository.remove(number);
-    if (isSuccess) {
+    if (isSuccess)
       System.out.println("[Berhasil menghapus mahasiswa kode : " + number + " ]");
-    } else {
+    else
       System.out.println("[Gagal menghapus mahasiswa kode : " + number + " ]");
-    }
+
   }
 
   @Override

@@ -31,6 +31,9 @@ public class MahasiswaView {
         case "3":
           searchMahasiswa();
           break;
+        case "4":
+          updateMahasiswa();
+          break;
         case "x":
           break label;
         default:
@@ -106,7 +109,7 @@ public class MahasiswaView {
         }
       }
     } catch (NumberFormatException exception) {
-      System.out.println("Input salah!");
+      System.out.println("Id salah!");
     }
 
   }
@@ -129,7 +132,8 @@ public class MahasiswaView {
             removeMahasiswa();
             break;
           case "2":
-            //ubah
+            updateMahasiswa();
+            break;
           case "x":
             break label;
           default:
@@ -138,9 +142,51 @@ public class MahasiswaView {
         }
       }
 
-
     }
 
+  }
+
+  public void updateMahasiswa() {
+    try {
+      int id = Integer.parseInt(InputUtil.input("Masukkan id"));
+      Mahasiswa mahasiswa = mahasiswaService.findById(id);
+
+      if (mahasiswa == null) {
+        System.out.println("Id salah, data tidak ditemukan!");
+        return;
+      }
+
+      System.out.println("\nNama :\t" + mahasiswa.getName());
+      System.out.println("NIM :\t" + mahasiswa.getNim());
+      System.out.println("Email :\t" + mahasiswa.getEmail());
+
+      String name = InputUtil.input("\nMasukkan nama (!default jika tidak mengubah)");
+      String nim = InputUtil.input("Masukkan nim (!default jika tidak mengubah)");
+      String email = InputUtil.input("Masukkan email (!default jika tidak mengubah)");
+
+      if (name.equals("!default"))
+        name = mahasiswa.getName();
+      if (nim.equals("!default"))
+        nim = mahasiswa.getNim();
+      if (email.equals("!default"))
+        email = mahasiswa.getEmail();
+
+      System.out.println("\nNama :\t" + name);
+      System.out.println("NIM :\t" + nim);
+      System.out.println("Email :\t" + email);
+
+      String isSure = InputUtil.input("Apakah anda yakin ? (Y/n)");
+      if (isSure.equalsIgnoreCase("y")) {
+        mahasiswaService.updateMahasiswa(id, name, nim, email);
+      } else if (isSure.equalsIgnoreCase("n")) {
+        System.out.println("[Batal mengubah]");
+      } else {
+        System.out.println("Pilihan tidak dimengerti");
+      }
+
+    } catch (NumberFormatException exception) {
+      System.out.println("Id salah!");
+    }
   }
 
 }
