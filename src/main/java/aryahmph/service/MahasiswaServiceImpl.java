@@ -43,8 +43,8 @@ public class MahasiswaServiceImpl implements MahasiswaService {
       return;
     }
 
-    if (!email.equals(mahasiswa.getNim()) && isEmailExist(email)) {
-      System.out.println("[Gagal mengubah, nim telah terdaftar]");
+    if (!email.equals(mahasiswa.getEmail()) && isEmailExist(email)) {
+      System.out.println("[Gagal mengubah, email telah terdaftar]");
       return;
     }
 

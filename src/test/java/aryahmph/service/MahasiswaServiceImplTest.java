@@ -4,7 +4,6 @@
 //import aryahmph.util.DatabaseUtil;
 //import com.zaxxer.hikari.HikariDataSource;
 //import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.Assertions;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //
@@ -21,12 +20,11 @@
 //
 //  @Test
 //  void testAdd() {
-//    mahasiswaService.addMahasiswa("Gandi Subara", "090211820", "gandi@test.com");
+//    mahasiswaService.addMahasiswa("Gandi Subara", "09021182025008", "gandi@test.com");
 //  }
 //
 //  @Test
 //  void testRemove() {
-//    mahasiswaService.removeMahasiswa(2);
 //  }
 //
 //  @Test
@@ -41,7 +39,7 @@
 //
 //  @Test
 //  void testUpdateMahasiswa() {
-//    mahasiswaService.updateMahasiswa(1,"Arya Yunanta", "09120313091", "gandi@test.com");
+//
 //  }
 //
 //  @AfterEach

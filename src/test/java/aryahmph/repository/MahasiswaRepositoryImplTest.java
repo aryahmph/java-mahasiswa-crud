@@ -29,16 +29,8 @@
 //
 //  @Test
 //  void testRemove() {
-//    boolean delete = mahasiswaRepository.remove(5);
-//    Assertions.assertEquals(true, delete);
 //  }
 //
-//  @Test
-//  void testAddAndRemove() {
-//    mahasiswaRepository.remove(2);
-//    Mahasiswa mahasiswa = new Mahasiswa("Arya Yunanta", "09021182025009", "arya@test.com");
-//    mahasiswaRepository.add(mahasiswa);
-//  }
 //
 //  @Test
 //  void testFindAll() {
@@ -64,8 +56,7 @@
 //
 //  @Test
 //  void testUpdate() {
-//    Mahasiswa mahasiswa = new Mahasiswa(100,"Arya Pradata", "023013010", "arya@test.com");
-//    Assertions.assertFalse(mahasiswaRepository.update(mahasiswa));
+//
 //  }
 //
 //  @AfterEach
