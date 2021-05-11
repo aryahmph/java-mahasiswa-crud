@@ -7,7 +7,7 @@ java -jar fileLocationNameWithDependencies
 
 
 ### Program Requirements
-#### 1. Java 17
+#### 1. Java 16
 Some syntax need newest java version like text block.
 #### 2. MySQL
 You need to install MySQL or MariaDB for database. You must create database named 'crud_mahasiswa_java' and table 'mahasiswa' to run the program, table code is used as follows :
